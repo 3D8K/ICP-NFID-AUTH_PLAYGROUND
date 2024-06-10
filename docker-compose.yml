@@ -1,31 +1,16 @@
 version: "3.8"
 
 services:
-  backend:
+  nextjs-app:
     build:
-      context: ./src/backend
-      dockerfile: Dockerfile.backend
-    volumes:
-      - ./src/backend:/app
-    ports:
-      - "8000:8000"
-    environment:
-      - NODE_ENV=development
-    networks:
-      - mynetwork
-
-  frontend:
-    build:
-      context: ./src/frontend
-      dockerfile: Dockerfile.frontend
-    volumes:
-      - ./src/frontend:/app
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - NODE_ENV=development
-    networks:
-      - mynetwork
-networks:
-  mynetwork:
-    driver: bridge
+    volumes:
+      - .:/app
+    working_dir: /app/src/frontend
+    command: >
+      sh -c "npm install &&
+             npm run build &&
+             npm run start"

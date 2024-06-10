@@ -1,15 +1,15 @@
-FROM node:latest
+FROM node:19-alpine
 
 WORKDIR /app
 
-COPY ./src/frontend/package*.json ./
+COPY package*.json ./
 
-RUN npm install
+COPY . .
 
-COPY ./src/frontend/. .
-
-COPY ./src/declarations/backend/ ../declarations/backend/
+RUN npm i
 
 RUN npm run build
 
-CMD ["npm", "start"];
+EXPOSE 3000
+
+CMD ["npm", "run", "start"]
