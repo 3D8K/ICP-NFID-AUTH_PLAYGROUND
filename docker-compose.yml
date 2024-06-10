@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  backend:
+    build:
+      context: ./src/backend
+      dockerfile: Dockerfile.backend
+    volumes:
+      - ./src/backend:/app
+    ports:
+      - "8000:8000"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - mynetwork
+
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile.frontend
+    volumes:
+      - ./src/frontend:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+    networks:
+      - mynetwork
+networks:
+  mynetwork:
+    driver: bridge
